@@ -34,6 +34,7 @@ const express = require('express');
 // This package turns that off for our own server, so your
 // frontend is allowed to call it.
 const cors = require('cors');
+const path = require('path');
 
 // This is Anthropic's official library for talking to Claude
 // from server-side code like this.
@@ -42,7 +43,7 @@ const Anthropic = require('@anthropic-ai/sdk');
 // ---- 2. Set up the server and the Claude client ----
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // This creates a reusable connection to the Claude API, already
 // configured with your secret key from the .env file.
@@ -55,6 +56,7 @@ app.use(express.json());
 
 // Allow requests from the browser (see CORS note above).
 app.use(cors());
+app.use(express.static(__dirname));
 
 // The 5 fixed stages of the sequence, in order. We reuse this
 // both to tell Claude what to write, and to double check its
@@ -72,6 +74,9 @@ const SEQUENCE_STAGES = [
 // "POST /api/generate-email-sequence" means: when the frontend
 // sends a POST request to this exact address, run the function
 // below.
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'email-sequence-generator.html'));
+});
 
 app.post('/api/generate-email-sequence', async (req, res) => {
   try {
