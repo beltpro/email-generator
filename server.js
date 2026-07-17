@@ -57,6 +57,7 @@ app.use(express.json());
 // Allow requests from the browser (see CORS note above).
 app.use(cors());
 app.use(express.static(__dirname));
+console.log("Serving files from:", __dirname);
 
 // The 5 fixed stages of the sequence, in order. We reuse this
 // both to tell Claude what to write, and to double check its
