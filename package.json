@@ -1,0 +1,16 @@
+{
+  "name": "email-sequence-backend",
+  "version": "1.0.0",
+  "description": "A simple backend that generates a 5-email sales sequence using the Claude API.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
