@@ -377,13 +377,6 @@
     setLoading(true);
 
     try {
-      // -----------------------------------------------------------------
-      // TODO: Replace this mock call with the real Claude API request.
-      // callClaudeForEmailSequence() below is a placeholder that should
-      // call your backend endpoint (which in turn calls the Claude API),
-      // passing `description`, and return an array of 5 objects shaped
-      // like { stage, subject, body }, in sequence order.
-      // -----------------------------------------------------------------
       const emails = await callClaudeForEmailSequence(description);
       renderEmails(emails);
     } catch (err) {
@@ -395,13 +388,13 @@
   }
 
   /**
-   * Calls our own backend (see the email-sequence-backend project),
-   * which in turn calls Claude and returns the generated sequence.
-   * Requires the backend to be running locally on port 3000
-   * (run `npm start` inside the email-sequence-backend folder).
+   * Calls our deployed backend on Render, which in turn calls
+   * Claude and returns the generated sequence. Since this backend
+   * is deployed (not running on localhost), this works from any
+   * device - computer, phone, tablet, anywhere with internet.
    */
   async function callClaudeForEmailSequence(description) {
-    const response = await fetch('http://localhost:3000/api/generate-email-sequence', {
+    const response = await fetch('https://email-generator-rkyy.onrender.com/api/generate-email-sequence', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ description }),
